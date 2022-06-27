@@ -19,4 +19,4 @@ Daraus wurde dieses UML-Sequence Diagramm entwickelt, das die Abläufe der UseCa
 Beispiele für die Inhalte der gesendeten Informationsobjekte stelle ich als UML-Object Diagramm dar. 
 
 #### Freie Tische anfragen
-![UML-Object 1: Freie Tische anfragen](diagramme/UML-UseCase_1_FreieTischeAnfragen.drawio.svg)
+![UML-Object 1: Freie Tische anfragen](diagramme/UML-Object_1_FreieTischeAnfragen.drawio.svg)
