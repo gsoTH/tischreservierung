@@ -14,7 +14,11 @@ In einigen Fällen kommt es vor, dass Reservierungen telefonisch wieder stornier
 Vor Ort benötigen die Kellner nur Einblick über alle Reservierungen des aktuellen Tages, um Gäste zu ihren Tischen zu leiten.
 
 ### Beschreibung des Soll-Konzepts
+Die Reservierung soll zukünftig nur noch über ein Buchungssystem erfolgen. Die Kunden sollen über unsere Webseite die freien Tische zu einem gewünschten Termin anzeigen können. Anschließend sollen sie die Tische reservieren und die Reservierung ggf. stornieren können. 
 
+Für die Kellner vor Ort reicht es aus, alle Reservierungen des aktuellen Tages zu sehen.
+
+Personenbezogene Daten sollen vorerst nicht erhoben werden.
 
 ## Analyse
 Die Situation wird in mehreren Diagrammen genauer analysiert. 
