@@ -47,8 +47,19 @@ Aus dem Sequenzdiagramm lassen sich einzelne Nachrichten ableiten.Beispiele für
 #### Reservierung stornieren
 ![UML-Object 3: Reservierung stornieren](diagramme/UML-Object_3_ReservierungStornieren.drawio.svg)
 
-### Klassendiagramme
-** TODO: Aus den Objektdiagrammen lassen sich Klassen ableiten. **
+### Klassendiagramm
+Dieses UML-Class Diagramm versucht die Informationen aller Objekte in möglichst wenigen Klassen darzustellen. 
+![UML-Class](diagramme/UML-Class.drawio.svg)
+
+
+### ERD
+Auf Basis des Klassendiagramms wurde ein Entity-Relationship-Diagramm erstellt, das geeignet ist, alle notwendigen Informationen in einer Relationalen Datenbank abzulegen. 
+
+![ERD](diagramme/Entity-Relationship.drawio.svg)
+
+Für Testzwecke wurde dieses ERD in einer SQLite Datenbank realisiert. In späteren Phasen der Entwicklung sollte ein mehrbenutzerfähiges DBMS genutzt werden.
+
 
 ## Log
 - Die Idee der Stornierungspin kam mir erst bei der Modellierung der Objektdiagramme. Anschließend habe ich das Sequenzdiagramm aktualisiert. Schließlich habe ich den Eindruck, dass im Sequenzdiagramm nur die Titel der Objekte auf den Pfeilen dargestellt werden sollten.
+- Die Motivation für Klassendiagramme ist nicht klar. Mir fällt es leichter, ein ERD zu entwickeln.
