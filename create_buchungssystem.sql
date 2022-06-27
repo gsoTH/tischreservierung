@@ -29,7 +29,7 @@ INSERT INTO tische (nr, anzahlPlaetze) VALUES
 ;
 
 INSERT INTO reservierungen (nr, zeitpunkt, tischNr, pin, storniert) VALUES
-    (1, '2022-02-02 17:30:00', 1, 1331, 'False')
+    (1, '2022-02-02 17:30:00', 1, 1331, 'False') -- PIN wurde garantiert zufällig erzeugt...
 ,   (2, '2022-02-02 18:30:00', 1, 1332, 'False')
 ,   (3, '2022-02-02 19:30:00', 1, 1333, 'False')
 ,   (4, '2022-02-02 18:30:00', 3, 1334, 'False')
