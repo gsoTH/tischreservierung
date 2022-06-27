@@ -13,3 +13,10 @@ Das nachfolgende UML-Use-Case Diagramm zeigt die Anwendungsfälle, die entwickel
 Daraus wurde dieses UML-Sequence Diagramm entwickelt, das die Abläufe der UseCases genauer darstellt. Hieraus lassen sich einzelne Nachrichten ableiten.
 
 ![UML-Sequence Diagramm](diagramme/UML-Sequence.drawio.svg)
+
+
+### Objektdiagramme
+Beispiele für die Inhalte der gesendeten Informationsobjekte stelle ich als UML-Object Diagramm dar. 
+
+#### Freie Tische anfragen
+![UML-Object 1: Freie Tische anfragen](diagramme/UML-UseCase_1_FreieTischeAnfragen.drawio.svg)
