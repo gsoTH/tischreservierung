@@ -17,6 +17,7 @@ Daraus wurde dieses UML-Sequence Diagramm entwickelt, das die Abläufe der UseCa
 
 ![UML-Sequence Diagramm](diagramme/UML-Sequence.drawio.svg)
 
+**Nachrichtenbezeichnungen anpassen, damit ein Mapping zum Objektdiagramm möglich ist?**
 
 ### Objektdiagramme
 Beispiele für die Inhalte der gesendeten Informationsobjekte stelle ich als UML-Object Diagramm dar. 
@@ -29,3 +30,8 @@ Beispiele für die Inhalte der gesendeten Informationsobjekte stelle ich als UML
 
 #### Reservierung stornieren
 ![UML-Object 3: Reservierung stornieren](diagramme/UML-Object_3_ReservierungStornieren.drawio.svg)
+
+
+
+## Log
+- Die Idee der Stornierungspin kam mir erst bei der Modellierung der Objektdiagramme. Anschließend habe ich das Sequenzdiagramm aktualisiert. Schließlich habe ich den Eindruck, dass im Sequenzdiagramm nur die Titel der Objekte auf den Pfeilen dargestellt werden sollten.
