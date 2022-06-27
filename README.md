@@ -57,7 +57,7 @@ Auf Basis des Klassendiagramms wurde ein Entity-Relationship-Diagramm erstellt, 
 
 ![ERD](diagramme/Entity-Relationship.drawio.svg)
 
-Für Testzwecke wurde dieses ERD in einer SQLite Datenbank realisiert. In späteren Phasen der Entwicklung sollte ein mehrbenutzerfähiges DBMS genutzt werden.
+Für Testzwecke wurde dieses ERD in einer [SQLite Datenbank](create_buchungssystem.sql) realisiert. In späteren Phasen der Entwicklung sollte ein mehrbenutzerfähiges DBMS genutzt werden.
 
 
 ## Log
