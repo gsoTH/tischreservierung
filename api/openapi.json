@@ -157,14 +157,12 @@
         "title": "tisch",
         "description": "Ein Tisch in unserem Ladenlokal.",
         "properties": {
-          "nummer": {
-            "title": "nummer",
+          "nr": {
             "description": "Die Tischnummer",
             "type": "integer",
             "format": "int32"
           },
-          "anzahl": {
-            "title": "anzahl",
+          "anzahlPlaetze": {
             "description": "Anzahl der Sitzplätze",
             "type": "integer",
             "format": "int32"
