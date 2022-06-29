@@ -1,9 +1,9 @@
 import flask
-from flask import jsonify
-from flask import request
+from flask import request   #wird benötigt, um die HTTP-Parameter abzufragen
+from flask import jsonify   #übersetzt python-dicts in json
 import sqlite3
-import random #notwendig für das Erzeugen eines pins
-import re #notwendig für die Arbeit mit Regex
+import random               #notwendig für das Erzeugen eines pins
+import re                   #notwendig für die Arbeit mit Regex
 
 
 app = flask.Flask(__name__)
@@ -29,8 +29,8 @@ def anfragen():
 
     zeitpunkt = zeitpunktAnpassen(zeitpunkt)
     
-    subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
-    query = "SELECT tischnummer, anzahlPlaetze FROM tische WHERE nr NOT IN (" + subquery +");"
+    subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"' AND storniert = 'False'" #alle belegten Tische zum Zeitpunkt X
+    query = "SELECT tischnummer, anzahlPlaetze FROM tische WHERE tischnummer NOT IN (" + subquery +");"
 
     conn = sqlite3.connect('api/buchungssystem.sqlite')
     conn.row_factory = dict_factory
@@ -88,8 +88,8 @@ def reservieren():
     if not tischnummer: #Falls kein Parameter angegeben wurde
         return bad_request("Keine Tischnummer angegeben")
 
-    subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
-    query = "SELECT tischnummer FROM tische WHERE nr NOT IN (" + subquery +") AND nr = " + tischnummer
+    subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"' AND storniert = 'False'" #alle belegten Tische zum Zeitpunkt X
+    query = "SELECT tischnummer FROM tische WHERE tischnummer NOT IN (" + subquery +") AND tischnummer = " + tischnummer 
 
     conn = sqlite3.connect('api/buchungssystem.sqlite')
     conn.row_factory = dict_factory
@@ -105,7 +105,7 @@ def reservieren():
     cur.execute(query)
     conn.commit() #Änderungen in Datenbank schreiben
 
-    query = "SELECT * FROM reservierungen WHERE zeitpunkt = '"+ zeitpunkt +"' AND tischnummer = " + tischnummer
+    query = "SELECT * FROM reservierungen WHERE zeitpunkt = '"+ zeitpunkt +"' AND tischnummer = " + tischnummer + " AND storniert = 'False'"
     result = cur.execute(query).fetchone()
     conn.close()
     return jsonify(result), 200
@@ -113,8 +113,31 @@ def reservieren():
 
 @app.route('/api/v1/stornieren',  methods=['POST'])
 def stornieren():
-   if not request.is_json:
+    if not request.is_json:
         return "Request was not JSON", 400
+
+    reservierungsnummer = request.json.get("reservierungsnummer")
+    pin = request.json.get("pin")
+
+    query = "SELECT * FROM reservierungen WHERE reservierungsnummer = " + str(reservierungsnummer) + " AND pin = " + str(pin)
+    
+    conn = sqlite3.connect('api/buchungssystem.sqlite')
+    conn.row_factory = dict_factory
+
+    # https://www.tutorialspoint.com/python_data_access/python_sqlite_cursor_object.htm
+    cur = conn.cursor()
+    result = cur.execute(query).fetchone()
+    if not result:
+        return "Reservierungsnummer und/oder PIN sind nicht korrekt", 400
+    
+    query = "UPDATE reservierungen SET storniert = 'True' WHERE reservierungsnummer = " + str(reservierungsnummer)
+    cur.execute(query)
+    conn.commit()
+    conn.close()
+
+
+    return "Die Reservierung wurde storniert", 201
+
 
 
 @app.errorhandler(400)
