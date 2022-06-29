@@ -1,0 +1,267 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "tischreservierung API",
+    "description": "Ein Beispiel für die Entwicklung (und Dokumentation) einer API mit Flask.",
+    "contact": {
+      "name": "Git-Repository",
+      "url": "https://github.com/gsoTH/tischreservierung"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/anfragen": {
+      "get": {
+        "tags": [
+          "Reservieren"
+        ],
+        "summary": "Verfügbare Tische zu bestimmten Zeitpunkt abfragen",
+        "description": "Returns Liste alle verfügbaren Tische",
+        "operationId": "anfragen",
+        "parameters": [
+          {
+            "name": "zeitpunkt",
+            "in": "query",
+            "description": "Zeitpunkt, ab dem ein Tisch gewünscht ist.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tisch"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Zeitangabe fehlt oder ist fehlerhaft"
+          }
+        }
+      }
+    },
+    "/api/v1/reservieren": {
+      "get": {
+        "tags": [
+          "Reservieren"
+        ],
+        "summary": "Tische zu bestimmten Zeitpunkt reservieren",
+        "description": "Returns Reservierungsnummer und PIN",
+        "operationId": "reservieren",
+        "parameters": [
+          {
+            "name": "zeitpunkt",
+            "in": "query",
+            "description": "Zeitpunkt, ab dem ein Tisch gewünscht ist.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "tischnummer",
+            "in": "query",
+            "description": "Der gewünschte Tisch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reservierung erfolgreich",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Reservierung"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Zeitangabe oder Tischnummer fehlt oder ist fehlerhaft"
+          }
+        }
+      }
+    },
+    "/api/v1/stornieren": {
+      "get": {
+        "tags": [
+          "Stornieren"
+        ],
+        "summary": "Vorhandene Reservierungen stornieren",
+        "description": "Benötigt Reservierungsnummer und PIN",
+        "operationId": "stornieren",
+        "parameters": [
+          {
+            "name": "reservierungsnummer",
+            "in": "query",
+            "description": "Die eindeutige Reservierungsnummer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pin",
+            "in": "query",
+            "description": "Der zugehörige Pin",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Die Reservierung wurde storniert",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/Stornierung"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Reservierungsnummer und/oder PIN sind nicht korrekt"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Tisch": {
+        "title": "tisch",
+        "description": "Ein Tisch in unserem Ladenlokal.",
+        "properties": {
+          "nummer": {
+            "title": "nummer",
+            "description": "Die Tischnummer",
+            "type": "integer",
+            "format": "int32"
+          },
+          "anzahl": {
+            "title": "anzahl",
+            "description": "Anzahl der Sitzplätze",
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "type": "object"
+      },
+      "Reservierung": {
+        "title": "reservierung",
+        "description": "Eine Reservierungsbestätigung",
+        "properties": {
+          "datum": {
+            "title": "datum",
+            "description": "Datum der Reservierung",
+            "type": "string",
+            "format": "date"
+          },
+          "zeitpunktVon": {
+            "title": "zeitpunktVon",
+            "description": "Startzeit der Reservierung",
+            "type": "string",
+            "format": "date-time"
+          },
+          "zeitpunktBis": {
+            "title": "zeitpunktBis",
+            "description": "Ende der Reservierung",
+            "type": "string",
+            "format": "date-time"
+          },
+          "reservierungsnummer": {
+            "title": "reservierungsnummer",
+            "description": "Die eindeutige Nummer der Reservierung",
+            "type": "integer",
+            "format": "int32"
+          },
+          "tischnummer": {
+            "title": "tischnummer",
+            "description": "Die Tischnummer",
+            "type": "integer",
+            "format": "int32"
+          },
+          "stornierungspin": {
+            "title": "pin",
+            "description": "Pin für eine eventuelle Reservierung",
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "type": "object"
+      },
+      "Stornierung": {
+        "title": "stornierung",
+        "description": "Eine Zusammenfassung einer stornieren Reservierung",
+        "properties": {
+          "datum": {
+            "title": "datum",
+            "description": "Datum der Reservierung",
+            "type": "string",
+            "format": "date"
+          },
+          "zeitpunktVon": {
+            "title": "zeitpunktVon",
+            "description": "Startzeit der Reservierung",
+            "type": "string",
+            "format": "date-time"
+          },
+          "zeitpunktBis": {
+            "title": "zeitpunktBis",
+            "description": "Ende der Reservierung",
+            "type": "string",
+            "format": "date-time"
+          },
+          "reservierungsnummer": {
+            "title": "reservierungsnummer",
+            "description": "Die eindeutige Nummer der Reservierung",
+            "type": "integer",
+            "format": "int32"
+          },
+          "tischnummer": {
+            "title": "tischnummer",
+            "description": "Die Tischnummer",
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Reservieren",
+      "description": "Neue Reservierungen erzeugen"
+    },
+    {
+      "name": "Stornieren",
+      "description": "Vorhandene Reservierungen verändern"
+    }
+  ]
+}
