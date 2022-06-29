@@ -1,6 +1,11 @@
 # Tischreservierung
 Ein Beispiel für die Entwicklung einer API mit Flask.
 
+Flask ist ein Python Framework für das Backend, das HTTP-Requests zu Python-Funktionen zuordnet.
+
+## Warum Flask?
+Eine Erläuterung inkl. Nutzwertanalyse findet sich [hier](diagramme/Nutzwertanalyse.md).
+
 ## Wie man mit diesem Repository arbeitet
 Dieses Repository enthält Branches, die unterschiedliche Versionen des gleichen Beispiels enthalten. Einige Beispiele: 
 - Der [main-branch](https://github.com/gsoTH/tischreservierung/tree/main) enthält das Lastenheft und Anforderungen des Kunden
