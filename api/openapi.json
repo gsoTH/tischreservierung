@@ -86,7 +86,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Reservierung"
                   }
@@ -101,48 +101,25 @@
       }
     },
     "/api/v1/stornieren": {
-      "get": {
+      "post": {
         "tags": [
           "Stornieren"
         ],
         "summary": "Vorhandene Reservierungen stornieren",
-        "description": "Benötigt Reservierungsnummer und PIN",
-        "operationId": "stornieren",
-        "parameters": [
-          {
-            "name": "reservierungsnummer",
-            "in": "query",
-            "description": "Die eindeutige Reservierungsnummer",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "pin",
-            "in": "query",
-            "description": "Der zugehörige Pin",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Die Reservierung wurde storniert",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "items": {
-                    "$ref": "#/components/schemas/Stornierung"
-                  }
-                }
+        "requestBody": {
+          "description": "Mindestens diese Elemente müssen vorhanden sein. Eine Reservierung ist ebenfalls gültig.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stornierung"
               }
             }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Die Reservierung wurde storniert"
           },
           "400": {
             "description": "Reservierungsnummer und/oder PIN sind nicht korrekt"
@@ -174,29 +151,20 @@
         "title": "reservierung",
         "description": "Eine Reservierungsbestätigung",
         "properties": {
-          "datum": {
-            "title": "datum",
-            "description": "Datum der Reservierung",
-            "type": "string",
-            "format": "date"
-          },
-          "zeitpunktVon": {
-            "title": "zeitpunktVon",
-            "description": "Startzeit der Reservierung",
-            "type": "string",
-            "format": "date-time"
-          },
-          "zeitpunktBis": {
-            "title": "zeitpunktBis",
-            "description": "Ende der Reservierung",
-            "type": "string",
-            "format": "date-time"
-          },
           "reservierungsnummer": {
-            "title": "reservierungsnummer",
             "description": "Die eindeutige Nummer der Reservierung",
             "type": "integer",
             "format": "int32"
+          },
+          "pin": {
+            "description": "Pin für eine eventuelle Stornierung",
+            "type": "integer",
+            "format": "int32"
+          },
+          "storniert": {
+            "description": "Zeigt an, ob die Reservierung storniert wurde",
+            "type": "boolean",
+            "default": false
           },
           "tischnummer": {
             "title": "tischnummer",
@@ -204,11 +172,10 @@
             "type": "integer",
             "format": "int32"
           },
-          "stornierungspin": {
-            "title": "pin",
-            "description": "Pin für eine eventuelle Reservierung",
-            "type": "integer",
-            "format": "int32"
+          "zeitpunkt": {
+            "description": "Startzeit der Reservierung",
+            "type": "string",
+            "format": "date-time"
           }
         },
         "type": "object"
@@ -217,33 +184,14 @@
         "title": "stornierung",
         "description": "Eine Zusammenfassung einer stornieren Reservierung",
         "properties": {
-          "datum": {
-            "title": "datum",
-            "description": "Datum der Reservierung",
-            "type": "string",
-            "format": "date"
-          },
-          "zeitpunktVon": {
-            "title": "zeitpunktVon",
-            "description": "Startzeit der Reservierung",
-            "type": "string",
-            "format": "date-time"
-          },
-          "zeitpunktBis": {
-            "title": "zeitpunktBis",
-            "description": "Ende der Reservierung",
-            "type": "string",
-            "format": "date-time"
-          },
           "reservierungsnummer": {
             "title": "reservierungsnummer",
             "description": "Die eindeutige Nummer der Reservierung",
             "type": "integer",
             "format": "int32"
           },
-          "tischnummer": {
-            "title": "tischnummer",
-            "description": "Die Tischnummer",
+          "pin": {
+            "description": "Zugehöriger Pin",
             "type": "integer",
             "format": "int32"
           }
