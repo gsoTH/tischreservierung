@@ -2,6 +2,7 @@ import flask
 from flask import jsonify
 from flask import request
 import sqlite3
+import random #notwendig für das Erzeugen eines pins
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True #Zeigt Fehlerinformationen im Browser, statt nur einer generischen Error-Message
@@ -34,6 +35,7 @@ def anfragen():
     # https://www.tutorialspoint.com/python_data_access/python_sqlite_cursor_object.htm
     cur = conn.cursor()
     results = cur.execute(query).fetchall()
+    conn.close()
 
     return jsonify(results), 200
 
@@ -53,9 +55,42 @@ def validateDateTimeFormat(dateTime:str):
 def zeitpunktAnpassen(dateTime:str):
     return NotImplementedError()
 
+#Bsp. für Aufruf: http://127.0.0.1:5000/api/v1/reservieren?zeitpunkt=2022-02-02 18:30:00&tischnummer=4
 @app.route('/api/v1/reservieren',  methods=['GET'])
 def reservieren():
-    return not_implemented(501)
+    query_parameters = request.args 
+    zeitpunkt = query_parameters.get('zeitpunkt')
+    if not zeitpunkt: #Falls kein Parameter angegeben wurde
+        return bad_request("Kein Zeitpunkt angegeben")
+#    if validateDateTimeFormat(zeitpunkt) == False:
+#        return bad_request("Zeitformat entspricht nicht dem Internetformat")
+#    zeitpunkt = zeitpunktAnpassen(zeitpunkt)
+
+    tischnummer = query_parameters.get('tischnummer')
+    if not tischnummer: #Falls kein Parameter angegeben wurde
+        return bad_request("Keine Tischnummer angegeben")
+
+    subquery = "SELECT tischNr FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
+    query = "SELECT nr FROM tische WHERE nr NOT IN (" + subquery +") AND nr = " + tischnummer
+
+    conn = sqlite3.connect('api/buchungssystem.sqlite')
+    conn.row_factory = dict_factory
+
+    cur = conn.cursor()
+    result = cur.execute(query).fetchone()
+
+    if not result:
+        # result ist null, falls die query kein Ergebnis liefert
+        return bad_request("Tisch ist nicht verfügbar.")
+
+    query = "INSERT INTO reservierungen (zeitpunkt, tischNr, pin, storniert) VALUES ('"+ zeitpunkt + "', " + tischnummer + ", '" + str(random.randint(1111, 9999)) + "', 'False')"
+    cur.execute(query)
+    conn.commit() #Änderungen in Datenbank schreiben
+
+    query = "SELECT * FROM reservierungen WHERE zeitpunkt = '"+ zeitpunkt +"' AND tischNr = " + tischnummer
+    result = cur.execute(query).fetchone()
+    conn.close()
+    return jsonify(result), 200
 
 @app.route('/api/v1/stornieren',  methods=['GET'])
 def stornieren():
