@@ -79,24 +79,26 @@ Beispielhaft wird für den ersten Anwendungsfall ein detailliertes Sequenzdiagra
 ![UML-Sequence im Detail](diagramme/UML-Sequence_Detailplanung.drawio.svg)
 
 ### OpenApi Spezifikation
-**TODO: Resevierungs-Objekte und Stornierungsobjekte in einem Open-Api Objekt zusammenfassen**
-
 Inspiriert von einer [Api-Dokumentation mit Katzen](https://catfact.ninja/) wurde eine [OpenApi Spezifikation](https://swagger.io/specification/) mit dem [SwaggerEditor](https://editor.swagger.io/) erzeugt.
- __Ob es sinnvoll ist, diese Dokumentation vor einer Detailplanung der Anwendungsfälle zu erzeugen ist fragwürdig.__
+ __Ob es sinnvoll ist, diese Dokumentation vor einer Detailplanung der Anwendungsfälle zu erzeugen ist fragwürdig. (Das bedeutet, es ist nicht sinnvoll ;) )__
 
 Die [JSON-Datei](api/openapi.json) dokumentiert die (geplanten) API-Funktionen. Wenn die Datei in den  [SwaggerEditor](https://editor.swagger.io/) importiert wird, kann man eine schön formatierte Übersicht erhalten.  Anschließend wurden die zugehörigen API-Endpunkte im Python-Skript erzeugt.
 
 __Swagger wurde nicht imporiert, um dieses Projekt nicht zu erschlagend werden zu lassen.__
 
-#### Log
+
+# Anhang
+## Log / Offene Fragen
 - Die Idee der Stornierungspin kam mir erst bei der Modellierung der Objektdiagramme. Anschließend habe ich das Sequenzdiagramm aktualisiert. Schließlich habe ich den Eindruck, dass im Sequenzdiagramm nur die Titel der Objekte auf den Pfeilen dargestellt werden sollten.
-- Die Motivation für Klassendiagramme ist nicht klar. Mir fällt es leichter, ein ERD zu entwickeln.
+- ~~Die Motivation für Klassendiagramme ist nicht klar. Mir fällt es leichter, ein ERD zu entwickeln.~~ Das Denken in Klassen macht sich bei der Spezifikation der API nützlich: Dort kann man sich Arbeit sparen, wenn eine Klasse für die JSONs modelliert wurde. Beim Einsatz von ORM werden Klassen eine größere Rolle spielen.
 - Die Spalten datum und UhrzeitVon lassen sich in SQLite in einer einzigen Spalte abbilden. Ich bin mir nicht sicher, ab welchem Zeitpunkt ich auf einzelne Technologien eingehen soll. Spätestens ab der Detailplanung der Anwendungsfälle werde ich auch Technologien eingehen müssen.
 
+## Tools
+- [Postman kann genutzt werden, um APIs zu testen](https://www.postman.com/)
+- [SwaggerEditor kann genutzt werden um OpenAPI Dokumentation zu erzeugen/anzuzeigen](https://editor.swagger.io/)
 
-#### Quellen
+## Quellen
 - [OpenApi Felddefinitionen](https://swagger.io/specification/)
-- [SwaggerEditor](https://editor.swagger.io/)
 - [Beispiel Api-Dokumentation mit Katzen](https://catfact.ninja/) Beispiel für den Aufruf mit Parameter: https://catfact.ninja/fact?max_length=40
 - [Beispiel für das Internet-Zeitformat](https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14)
 - [Liste der HTTP-Status Codes auf Wikipedia](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
