@@ -20,8 +20,8 @@ def anfragen():
     zeitpunkt = query_parameters.get('zeitpunkt')
     if not zeitpunkt: #Falls kein Parameter angegeben wurde
         return bad_request("Kein Zeitpunkt angegeben")
-    if validateDateTimeFormat(zeitpunkt) == False:
-        return bad_request("Zeitformat entspricht nicht dem Internetformat")
+#    if validateDateTimeFormat(zeitpunkt) == False:
+#        return bad_request("Zeitformat entspricht nicht dem Internetformat")
 
 #TODO    zeitpunkt = zeitpunktAnpassen(zeitpunkt)
     
@@ -37,6 +37,7 @@ def anfragen():
 
     return jsonify(results), 200
 
+#TODO Docstring Formate für Python nachschauen
 #Formt die Ausgabe von SQLite in ein brauchbares Format um
 def dict_factory(cursor, row):
     d = {}
@@ -47,10 +48,10 @@ def dict_factory(cursor, row):
 def validateDateTimeFormat(dateTime:str):
     #regex for InternetTimeFormat: /^[0-9]{4}-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9]Z$/g
     # https://regex101.com/r/xz7hfg/1
-    return True
+    return NotImplementedError()
 
 def zeitpunktAnpassen(dateTime:str):
-     return NotImplementedError()
+    return NotImplementedError()
 
 @app.route('/api/v1/reservieren',  methods=['GET'])
 def reservieren():
