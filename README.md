@@ -75,13 +75,14 @@ Für Testzwecke wurde dieses ERD in einer [SQLite Datenbank](create_buchungssyst
 
 
 ### Detailplanung der Anwendungsfälle
-** TODO **
+Beispielhaft wird für den ersten Anwendungsfall ein detailliertes Sequenzdiagramm darsgestellt.
+![UML-Sequence im Detail](diagramme/UML-Sequence_Detailplanung.drawio.svg)
 
 ### OpenApi Spezifikation
 **TODO: Resevierungs-Objekte und Stornierungsobjekte in einem Open-Api Objekt zusammenfassen**
 
 Inspiriert von einer [Api-Dokumentation mit Katzen](https://catfact.ninja/) wurde eine [OpenApi Spezifikation](https://swagger.io/specification/) mit dem [SwaggerEditor](https://editor.swagger.io/) erzeugt.
- __Ob es sinnvoll ist, diese Dokumentation vor einer Detailplanung der Anwendungsfälle zu erzeugen ist fragwürdig__
+ __Ob es sinnvoll ist, diese Dokumentation vor einer Detailplanung der Anwendungsfälle zu erzeugen ist fragwürdig.__
 
 Die [JSON-Datei](api/openapi.json) dokumentiert die (geplanten) API-Funktionen. Wenn die Datei in den  [SwaggerEditor](https://editor.swagger.io/) importiert wird, kann man eine schön formatierte Übersicht erhalten.  Anschließend wurden die zugehörigen API-Endpunkte im Python-Skript erzeugt.
 
