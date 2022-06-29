@@ -30,7 +30,7 @@ def anfragen():
     zeitpunkt = zeitpunktAnpassen(zeitpunkt)
     
     subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
-    query = "SELECT nr, anzahlPlaetze FROM tische WHERE nr NOT IN (" + subquery +");"
+    query = "SELECT tischnummer, anzahlPlaetze FROM tische WHERE nr NOT IN (" + subquery +");"
 
     conn = sqlite3.connect('api/buchungssystem.sqlite')
     conn.row_factory = dict_factory
@@ -89,7 +89,7 @@ def reservieren():
         return bad_request("Keine Tischnummer angegeben")
 
     subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
-    query = "SELECT nr FROM tische WHERE nr NOT IN (" + subquery +") AND nr = " + tischnummer
+    query = "SELECT tischnummer FROM tische WHERE nr NOT IN (" + subquery +") AND nr = " + tischnummer
 
     conn = sqlite3.connect('api/buchungssystem.sqlite')
     conn.row_factory = dict_factory
