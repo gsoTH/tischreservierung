@@ -11,6 +11,11 @@ Dieses Repository enthält Branches, die unterschiedliche Versionen des gleichen
 - Der [main-branch](https://github.com/gsoTH/tischreservierung/tree/main) enthält das Lastenheft und Anforderungen des Kunden
 - Der [nurSQL-branch](https://github.com/gsoTH/tischreservierung/tree/nurSQL) entält eine Implementierung ohne den Einsatz von Objekt-Rationalen-Mappern, also pures SQL - eine Variante die **nur** für Lehrzwecke geeignet ist.
 
+## Wie kann ich mir eine Lösung ansehen?
+Der gesamte Code kann direkt im Browser eingesehen werden. In diesem Branch ist die gesamte api in der Datei [api/api.py](api/api.py) untergebracht. 
+
+Um das Projekt lokal auszuführen kann nach einem Download und der Installation der pip-Pakete unter requirements.txt ein lokaler Server gestartet werden (d.h. das Python-Skript starten). Mit dem Browser können dann Anfragen gestellt werden, es gibt aber auch Tools zum API-Test, wie z.B. Postman.
+
 # Anforderungen
 
 ## Auszug aus dem Lastenheft
