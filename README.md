@@ -60,6 +60,8 @@ Aus dem Sequenzdiagramm lassen sich einzelne Nachrichten ableiten.Beispiele für
 ![UML-Object 3: Reservierung stornieren](diagramme/UML-Object_3_ReservierungStornieren.drawio.svg)
 
 ### Klassendiagramm
+**TODO: Datentypen auf Open-Api-konforme umstellen**
+
 Dieses UML-Class Diagramm versucht die Informationen aller Objekte in möglichst wenigen Klassen darzustellen. 
 ![UML-Class](diagramme/UML-Class.drawio.svg)
 
@@ -76,6 +78,8 @@ Für Testzwecke wurde dieses ERD in einer [SQLite Datenbank](create_buchungssyst
 ** TODO **
 
 ### OpenApi Spezifikation
+**TODO: Resevierungs-Objekte und Stornierungsobjekte in einem Open-Api Objekt zusammenfassen**
+
 Inspiriert von einer [Api-Dokumentation mit Katzen](https://catfact.ninja/) wurde eine [OpenApi Spezifikation](https://swagger.io/specification/) mit dem [SwaggerEditor](https://editor.swagger.io/) erzeugt.
  __Ob es sinnvoll ist, diese Dokumentation vor einer Detailplanung der Anwendungsfälle zu erzeugen ist fragwürdig__
 
