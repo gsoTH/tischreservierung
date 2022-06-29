@@ -3,6 +3,7 @@ from flask import jsonify
 from flask import request
 import sqlite3
 import random #notwendig für das Erzeugen eines pins
+import re #notwendig für die Arbeit mit Regex
 
 
 app = flask.Flask(__name__)
@@ -16,17 +17,17 @@ def home():
 
 @app.route('/api/v1/anfragen',  methods=['GET'])
 def anfragen():
-    # Bsp. Aufruf : http://127.0.0.1:5000/api/v1/anfragen?zeitpunkt=2022-02-02 18:30:00
+    # Bsp. Aufruf : http://127.0.0.1:5000/api/v1/anfragen?zeitpunkt=2022-02-02 18:15:00
     query_parameters = request.args 
     # The parsed URL parameters (the part in the URL after the question mark).
     # MultiDict[str, str]
     zeitpunkt = query_parameters.get('zeitpunkt')
     if not zeitpunkt: #Falls kein Parameter angegeben wurde
         return bad_request("Kein Zeitpunkt angegeben")
-    # if validateDateTimeFormat(zeitpunkt) == False:
-    #     return bad_request("Zeitformat entspricht nicht dem Internetformat")
+    if validateDateTimeFormat(zeitpunkt) == False:
+        return bad_request("Zeitformat entspricht nicht dem erwarteten Format")
 
-    # zeitpunkt = zeitpunktAnpassen(zeitpunkt)
+    zeitpunkt = zeitpunktAnpassen(zeitpunkt)
     
     subquery = "SELECT tischNr FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
     query = "SELECT nr, anzahlPlaetze FROM tische WHERE nr NOT IN (" + subquery +");"
@@ -52,25 +53,36 @@ def dict_factory(cursor, row):
 
 
 def validateDateTimeFormat(dateTime:str):
-    #regex for InternetTimeFormat: /^[0-9]{4}-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9]Z$/g
-    # https://regex101.com/r/xz7hfg/1
-    return NotImplementedError()
+    # Regex-Muster: https://regex101.com/r/xz7hfg/1
+    regPatternInternetTimeFormat = "^[0-9]{4}-[0-1][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0-9][0-9]Z$"
+    retPatternSqliteTimeFormat = "^[0-9]{4}-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]"
+    
+    isInternetTimeFormat = re.search(regPatternInternetTimeFormat, dateTime)
+    isSqliteTimeFormat = re.search(retPatternSqliteTimeFormat, dateTime)
+    
+    if isInternetTimeFormat or isSqliteTimeFormat:
+        return True
+    
+    return False
 
 
 def zeitpunktAnpassen(dateTime:str):
-    return NotImplementedError()
+    # https://regex101.com/r/7u8IpB/1
+    regPatternMinutes = ":[0-5][0-9]:"
+    result = re.sub(regPatternMinutes, ":30:", dateTime)
+    return result
 
 
 @app.route('/api/v1/reservieren',  methods=['GET'])
 def reservieren():
-    #Bsp. für Aufruf: http://127.0.0.1:5000/api/v1/reservieren?zeitpunkt=2022-02-02 18:30:00&tischnummer=4
+    #Bsp. für Aufruf: http://127.0.0.1:5000/api/v1/reservieren?zeitpunkt=2022-02-02 18:15:00&tischnummer=4
     query_parameters = request.args 
     zeitpunkt = query_parameters.get('zeitpunkt')
     if not zeitpunkt: #Falls kein Parameter angegeben wurde
         return bad_request("Kein Zeitpunkt angegeben")
-    # if validateDateTimeFormat(zeitpunkt) == False:
-    #     return bad_request("Zeitformat entspricht nicht dem Internetformat")
-    # zeitpunkt = zeitpunktAnpassen(zeitpunkt)
+    if validateDateTimeFormat(zeitpunkt) == False:
+        return bad_request("Zeitformat entspricht nicht dem Internetformat")
+    zeitpunkt = zeitpunktAnpassen(zeitpunkt)
 
     tischnummer = query_parameters.get('tischnummer')
     if not tischnummer: #Falls kein Parameter angegeben wurde
