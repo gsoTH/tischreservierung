@@ -23,7 +23,7 @@ def anfragen():
 #    if validateDateTimeFormat(zeitpunkt) == False:
 #        return bad_request("Zeitformat entspricht nicht dem Internetformat")
 
-#TODO    zeitpunkt = zeitpunktAnpassen(zeitpunkt)
+#    zeitpunkt = zeitpunktAnpassen(zeitpunkt)
     
     subquery = "SELECT tischNr FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
     query = "SELECT nr, anzahlPlaetze FROM tische WHERE nr NOT IN (" + subquery +");"
