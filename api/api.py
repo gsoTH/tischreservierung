@@ -29,7 +29,7 @@ def anfragen():
 
     zeitpunkt = zeitpunktAnpassen(zeitpunkt)
     
-    subquery = "SELECT tischNr FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
+    subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
     query = "SELECT nr, anzahlPlaetze FROM tische WHERE nr NOT IN (" + subquery +");"
 
     conn = sqlite3.connect('api/buchungssystem.sqlite')
@@ -88,7 +88,7 @@ def reservieren():
     if not tischnummer: #Falls kein Parameter angegeben wurde
         return bad_request("Keine Tischnummer angegeben")
 
-    subquery = "SELECT tischNr FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
+    subquery = "SELECT tischnummer FROM reservierungen WHERE zeitpunkt LIKE '" + zeitpunkt +"'"
     query = "SELECT nr FROM tische WHERE nr NOT IN (" + subquery +") AND nr = " + tischnummer
 
     conn = sqlite3.connect('api/buchungssystem.sqlite')
@@ -101,19 +101,20 @@ def reservieren():
         # result ist null, falls die query kein Ergebnis liefert
         return bad_request("Tisch ist nicht verfügbar.")
 
-    query = "INSERT INTO reservierungen (zeitpunkt, tischNr, pin, storniert) VALUES ('"+ zeitpunkt + "', " + tischnummer + ", '" + str(random.randint(1111, 9999)) + "', 'False')"
+    query = "INSERT INTO reservierungen (zeitpunkt, tischnummer, pin, storniert) VALUES ('"+ zeitpunkt + "', " + tischnummer + ", '" + str(random.randint(1111, 9999)) + "', 'False')"
     cur.execute(query)
     conn.commit() #Änderungen in Datenbank schreiben
 
-    query = "SELECT * FROM reservierungen WHERE zeitpunkt = '"+ zeitpunkt +"' AND tischNr = " + tischnummer
+    query = "SELECT * FROM reservierungen WHERE zeitpunkt = '"+ zeitpunkt +"' AND tischnummer = " + tischnummer
     result = cur.execute(query).fetchone()
     conn.close()
     return jsonify(result), 200
 
 
-@app.route('/api/v1/stornieren',  methods=['GET'])
+@app.route('/api/v1/stornieren',  methods=['POST'])
 def stornieren():
-    return not_implemented(501)
+   if not request.is_json:
+        return "Request was not JSON", 400
 
 
 @app.errorhandler(400)
