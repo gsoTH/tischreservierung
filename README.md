@@ -94,7 +94,7 @@ __Swagger wurde nicht imporiert, um dieses Projekt nicht zu erschlagend werden z
 In diesem Branch ist die gesamte api in der Datei [api/api.py](api/api.py) untergebracht. 
 Die notwendigen Pakete stehen in den import-Anweisungen oder der requirements.txt. Installation ggf. via pip.
 
-## :rocket: Offene Punkte / Einstiegspunkte für die Weiterentwicklung 
+# :rocket: Offene Punkte / Einstiegspunkte für die Weiterentwicklung 
 - Der Code versößt gegen Clean-Code Vorgaben, wie z.B. DRY (Don't repeat yourself). Welche Verbesserungen könnte man mit einem Refactoring erreichen?
 - Der vierte UseCase (Kellner möchte Reservierungen sehen), wurde wegen Sicherheitsbedenken nicht implementiert. Welche könnten das sein? Haben Sie einen Lösungsvorschlag?
 
