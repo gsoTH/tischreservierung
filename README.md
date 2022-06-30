@@ -91,12 +91,21 @@ Die [JSON-Datei](api/openapi.json) dokumentiert die (geplanten) API-Funktionen. 
 
 __Swagger wurde nicht imporiert, um dieses Projekt nicht zu erschlagend werden zu lassen.__
 
+## Implementierung
+In diesem Branch ist die gesamte api in der Datei [api/api.py](api/api.py) untergebracht. 
+Die notwendigen Pakete stehen in den import-Anweisungen oder der requirements.txt. Installation ggf. via pip.
+
+### :rocket: Offene Punkte / Einstiegspunkte für die Weiterentwicklung 
+- Der Code versößt gegen Clean-Code Vorgaben, wie z.B. DRY (Don't repeat yourself). Welche Verbesserungen könnte man mit einem Refactoring erreichen?
+- Der vierte UseCase (Kellner möchte Reservierungen sehen), wurde wegen Sicherheitsbedenken nicht implementiert. Welche könnten das sein? Haben Sie einen Lösungsvorschlag?
+
 
 # Anhang
-## Log / Offene Fragen
+## Log / Fragen / Lessons Learned
 - Die Idee der Stornierungspin kam mir erst bei der Modellierung der Objektdiagramme. Anschließend habe ich das Sequenzdiagramm aktualisiert. Schließlich habe ich den Eindruck, dass im Sequenzdiagramm nur die Titel der Objekte auf den Pfeilen dargestellt werden sollten.
 - ~~Die Motivation für Klassendiagramme ist nicht klar. Mir fällt es leichter, ein ERD zu entwickeln.~~ Das Denken in Klassen macht sich bei der Spezifikation der API nützlich: Dort kann man sich Arbeit sparen, wenn eine Klasse für die JSONs modelliert wurde. Beim Einsatz von ORM werden Klassen eine größere Rolle spielen.
 - Die Spalten datum und UhrzeitVon lassen sich in SQLite in einer einzigen Spalte abbilden. Ich bin mir nicht sicher, ab welchem Zeitpunkt ich auf einzelne Technologien eingehen soll. Spätestens ab der Detailplanung der Anwendungsfälle werde ich auch Technologien eingehen müssen.
+- LessonLearned: Typisierung tut Not! Ich habe einige Zeit mit dem POST eines JSONs verbraten, weil z.B. `r = request.json.get("reservierungsnummer")` eine automatische Typisierung vornimmt (`r` wird integer, aber ich habe einen string benötigt).
 
 ## Tools
 - [Postman kann genutzt werden, um APIs zu testen](https://www.postman.com/)
