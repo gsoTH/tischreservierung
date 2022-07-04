@@ -97,7 +97,7 @@ Die notwendigen Pakete stehen in den import-Anweisungen oder der requirements.tx
 # :rocket: Offene Punkte / Einstiegspunkte für die Weiterentwicklung 
 - Der Code versößt gegen Clean-Code Vorgaben, wie z.B. DRY (Don't repeat yourself). Welche Verbesserungen könnte man mit einem Refactoring erreichen?
 - Der vierte UseCase (Kellner möchte Reservierungen sehen), wurde wegen Sicherheitsbedenken nicht implementiert. Welche könnten das sein? Haben Sie einen Lösungsvorschlag?
-
+- Die Implementierung besitzt wahrscheinlich Schwachstellen. Schaffen Sie es, einen Fehler zu verursachen oder besser noch: die Datenbank zu manipulieren? 
 
 ## Anhang
 ### Log / Fragen / Lessons Learned
